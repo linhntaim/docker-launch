@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  php:
+    image: linhntatdsquare/uempnv:latest
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ../:/dsquare/docker
+    environment:
+      VUE_APP_ENV: production
+    command: bash /dsquare/docker/docker.boot.all.sh
+    ports:
+      - "80:80"
+      - "3306:3306"

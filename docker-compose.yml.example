@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  php:
+    image: linhntatdsquare/uemp:latest
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ../:/dsquare/docker
+    environment:
+      VUE_APP_ENV: production
+    command: php /dsquare/docker/_config.php
+    ports:
+      - "80:80"
+      - "3306:3306"
