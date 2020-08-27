@@ -1,6 +1,7 @@
 {
-    "PROJECT_NAME":"",
-    "GIT_USER_NAME":"",
-    "GIT_PASSWORD":"",
-    "GIT_SOURCE":""
+    "PROJECT_NAME":"project_name",
+    "GIT_USER_NAME":"git_name",
+    "GIT_PASSWORD":"password",
+    "GIT_URL":"git-gbu.japaneast.cloudapp.azure.com/group/project_name",
+    "GIT_BRANCH":"dev"
 }

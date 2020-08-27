@@ -1,4 +1,6 @@
 #!/bin/bash
+# Variable
+PROJECT_NAME="$@"
 echo "### PROJECT_NAME=${PROJECT_NAME}"
 # MySQL
 ### Set directory's permission; without it, service cannot start
@@ -22,19 +24,18 @@ fi
 ### Install packages
 composer install --working-dir=/dsquare/${PROJECT_NAME}
 ### Replace application environment
-cp /dsquare/${PROJECT_NAME}/.docker/.env.api /dsquare/${PROJECT_NAME}/.env
+cp /dsquare/${PROJECT_NAME}/.env.docker /dsquare/${PROJECT_NAME}/.env
 ### Require permissions for Laravel app
 chmod -R 777 /dsquare/${PROJECT_NAME}/bootstrap/cache
 chmod -R 777 /dsquare/${PROJECT_NAME}/storage
 ### Make sure Laravel schedule is ready to run
 echo "* * * * * php /dsquare/${PROJECT_NAME}/artisan schedule:run >> /dev/null 2>&1" >> /etc/crontab
-echo php /dsquare/docker/_web_config.php "${PROJECT_NAME}"
 # sendmail
 ### Start service
 ##service sendmail start
 # Supervisor
 ### Configuration to run Laravel queue
-### cp /dsquare/${PROJECT_NAME}/.docker/supervisor.conf /etc/supervisor/conf.d/${PROJECT_NAME}.conf
+### cp /dsquare/docker/.supervisor.conf /etc/supervisor/conf.d/${PROJECT_NAME}.conf
 ### Start service
 ##  service supervisor start
 # PHP
@@ -42,7 +43,7 @@ echo php /dsquare/docker/_web_config.php "${PROJECT_NAME}"
 service php7.3-fpm start
 # NGINX configuration
 ### Replace the configuration to run application
-cp /dsquare/docker/.docker/nginx.conf /etc/nginx/sites-available/default
+cp /dsquare/docker/.nginx.conf /etc/nginx/sites-available/default
 ### Make sure the NGINX run in foreground; without it, docker container will stop running
 echo "daemon off;" >> /etc/nginx/nginx.conf
 ### Start service

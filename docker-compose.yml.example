@@ -2,14 +2,19 @@ version: "3"
 
 services:
   php:
-    image: linhntatdsquare/uemp:latest
+    image: linhntatdsquare/uempnv:latest
     restart: unless-stopped
     tty: true
     volumes:
-      - ../:/dsquare/docker
+      - ./:/dsquare/docker
+      - projects:/dsquare
+      - mysql:/var/lib/mysql
     environment:
       VUE_APP_ENV: production
     command: php /dsquare/docker/_config.php
     ports:
-      - "80:80"
-      - "3306:3306"
+      - "8080:80"
+      - "33062:3306"
+volumes:
+  mysql:
+  projects:
