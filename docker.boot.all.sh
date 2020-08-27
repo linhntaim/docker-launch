@@ -18,13 +18,13 @@ mysql -e "GRANT ALL ON *.* TO '${PROJECT_NAME}'@'localhost';" #
 ### Apply the change of user permissions
 mysql -e "FLUSH PRIVILEGES;"
 ### Create database structure and data by script
-mysql -e "USE ${PROJECT_NAME};SOURCE /dsquare/docker/database.sql;"
+mysql -e "USE ${PROJECT_NAME};SOURCE /dsquare/${PROJECT_NAME}/.docker/database.sql.example;"
 fi
 # Laravel
 ### Install packages
 composer install --working-dir=/dsquare/${PROJECT_NAME}
 ### Replace application environment
-cp /dsquare/${PROJECT_NAME}/.env.docker /dsquare/${PROJECT_NAME}/.env
+cp /dsquare/${PROJECT_NAME}/.docker/.env.api /dsquare/${PROJECT_NAME}/.env
 ### Require permissions for Laravel app
 chmod -R 777 /dsquare/${PROJECT_NAME}/bootstrap/cache
 chmod -R 777 /dsquare/${PROJECT_NAME}/storage
@@ -39,8 +39,8 @@ service sendmail start
 ### Start service
 ### service supervisor start
 # Vue
-cp /dsquare/docker/.define.js.example /dsquare/${PROJECT_NAME}/resources/front-end/define.js
-cd /dsquare/${PROJECT_NAME}/resources/front-end && npm install && npm run setup && npm run compile && npm run build
+cp /dsquare/${PROJECT_NAME}/.docker/.env.admin /dsquare/${PROJECT_NAME}/resources/admin/.env
+cd /dsquare/${PROJECT_NAME}/resources/admin && npm install && npm run setup && npm run compile && npm run build
 # PHP
 ### Start service
 service php7.3-fpm start

@@ -15,7 +15,6 @@ https://docs.docker.com/install
 First, duplicate these file, then rename them and change some configuration if needed
 
 ```
-database.sql.example            => database.sql
 docker-compose.yml.example      => docker-compose.yml
 docker-compose-all.yml.example  => docker-compose-all.yml
 git.json.example                => git.json
