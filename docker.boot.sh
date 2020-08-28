@@ -1,7 +1,20 @@
 #!/bin/bash
 # Variable
-PROJECT_NAME="$@"
+for i in "$@"; do
+    if [[ $i =~ --PROJECT_NAME= ]]; then
+        PROJECT_NAME="${i#*=}"
+    fi
+    if [[ $i =~ --RESOURCE_ENV_API= ]]; then
+       RESOURCE_ENV_API="${i#*=}"
+    fi
+    if [[ $i =~ --RESOURCE_DATABASE= ]]; then
+       RESOURCE_DATABASE="${i#*=}"
+    fi
+done
 echo "### PROJECT_NAME=${PROJECT_NAME}"
+echo "### RESOURCE_ENV_API=${RESOURCE_ENV_API}"
+echo "### RESOURCE_DATABASE=${RESOURCE_DATABASE}"
+echo "#######################################"
 # MySQL
 ### Set directory's permission; without it, service cannot start
 chown -R mysql:mysql /var/lib/mysql
@@ -18,13 +31,13 @@ mysql -e "GRANT ALL ON *.* TO '${PROJECT_NAME}'@'localhost';" #
 ### Apply the change of user permissions
 mysql -e "FLUSH PRIVILEGES;"
 ### Create database structure and data by script
-mysql -e "USE ${PROJECT_NAME};SOURCE /dsquare/${PROJECT_NAME}/.docker/database.sql.example;"
+mysql -e "USE ${PROJECT_NAME};SOURCE /docker/resource/${RESOURCE_DATABASE};"
 fi
 # Laravel
 ### Install packages
 composer install --working-dir=/dsquare/${PROJECT_NAME}
 ### Replace application environment
-cp /dsquare/${PROJECT_NAME}/.docker/.env.api /dsquare/${PROJECT_NAME}/.env
+cp /docker/resource/${RESOURCE_ENV_API} /dsquare/${PROJECT_NAME}/.env
 ### Require permissions for Laravel app
 chmod -R 777 /dsquare/${PROJECT_NAME}/bootstrap/cache
 chmod -R 777 /dsquare/${PROJECT_NAME}/storage
@@ -35,7 +48,7 @@ echo "* * * * * php /dsquare/${PROJECT_NAME}/artisan schedule:run >> /dev/null 2
 ##service sendmail start
 # Supervisor
 ### Configuration to run Laravel queue
-### cp /dsquare/docker/.supervisor.conf /etc/supervisor/conf.d/${PROJECT_NAME}.conf
+### cp /docker/.supervisor.conf /etc/supervisor/conf.d/${PROJECT_NAME}.conf
 ### Start service
 ##  service supervisor start
 # PHP
@@ -43,7 +56,7 @@ echo "* * * * * php /dsquare/${PROJECT_NAME}/artisan schedule:run >> /dev/null 2
 service php7.3-fpm start
 # NGINX configuration
 ### Replace the configuration to run application
-cp /dsquare/docker/.nginx.conf /etc/nginx/sites-available/default
+cp /docker/.nginx.conf /etc/nginx/sites-available/default
 ### Make sure the NGINX run in foreground; without it, docker container will stop running
 echo "daemon off;" >> /etc/nginx/nginx.conf
 ### Start service

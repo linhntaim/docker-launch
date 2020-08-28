@@ -6,15 +6,15 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - ./:/dsquare/docker
+      - ./:/docker
       - projects:/dsquare
       - mysql:/var/lib/mysql
     environment:
       VUE_APP_ENV: production
-    command: php /dsquare/docker/_config.php
+    command: php /docker/docker.boot.php
     ports:
-      - "8080:80"
-      - "33062:3306"
+      - "80:80"
+      - "3306:3306"
 volumes:
   mysql:
   projects:
