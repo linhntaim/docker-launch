@@ -1,12 +1,10 @@
 <?php
 
-$variableGit = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'git.json'),true);
+$variableGit = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'git.json'), true);
 
-$variableGit['GIT_SOURCE'] = sprintf('http://%s:%s@git-gbu.japaneast.cloudapp.azure.com/gbu/%s',$variableGit['GIT_USERNAME'],$variableGit['GIT_PASSWORD'],$variableGit['PROJECT_NAME']);
+$variableGit['GIT_SOURCE'] = sprintf('http://%s:%s@git-gbu.japaneast.cloudapp.azure.com/gbu/%s', $variableGit['GIT_USERNAME'], $variableGit['GIT_PASSWORD'], $variableGit['PROJECT_NAME']);
 
-$variableGit['PROJECT_NAME'] = str_replace('-','_',$variableGit['PROJECT_NAME']);
-
-$runGit = shell_exec(sprintf('bash /docker/docker.git.sh --PROJECT_NAME=%s --GIT_SOURCE=%s --GIT_BRANCH=%s', $variableGit['PROJECT_NAME'],$variableGit['GIT_SOURCE'],$variableGit['GIT_BRANCH']));
+$runGit = shell_exec(sprintf('bash /docker/docker.git.sh --PROJECT_NAME=%s --GIT_SOURCE=%s --GIT_BRANCH=%s', $variableGit['PROJECT_NAME'], $variableGit['GIT_SOURCE'], $variableGit['GIT_BRANCH']));
 
 echo $runGit;
 
