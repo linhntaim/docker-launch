@@ -1,20 +1,7 @@
 #!/bin/bash
 # Variable
-for i in "$@"; do
-    if [[ $i =~ --PROJECT_NAME= ]]; then
-        PROJECT_NAME="${i#*=}"
-    fi
-    if [[ $i =~ --RESOURCE_ENV_API= ]]; then
-       RESOURCE_ENV_API="${i#*=}"
-    fi
-    if [[ $i =~ --RESOURCE_DATABASE= ]]; then
-       RESOURCE_DATABASE="${i#*=}"
-    fi
-done
+PROJECT_NAME="$@"
 echo "### PROJECT_NAME=${PROJECT_NAME}"
-echo "### RESOURCE_ENV_API=${RESOURCE_ENV_API}"
-echo "### RESOURCE_DATABASE=${RESOURCE_DATABASE}"
-echo "#######################################"
 # MySQL
 ### Set directory's permission; without it, service cannot start
 chown -R mysql:mysql /var/lib/mysql
@@ -31,13 +18,13 @@ mysql -e "GRANT ALL ON *.* TO '${PROJECT_NAME}'@'localhost';" #
 ### Apply the change of user permissions
 mysql -e "FLUSH PRIVILEGES;"
 ### Create database structure and data by script
-mysql -e "USE ${PROJECT_NAME};SOURCE /docker/resource/${RESOURCE_DATABASE};"
+mysql -e "USE ${PROJECT_NAME};SOURCE /docker/resource/${PROJECT_NAME}.database.sql;"
 fi
 # Laravel
 ### Install packages
 composer install --working-dir=/dsquare/${PROJECT_NAME}
 ### Replace application environment
-cp /docker/resource/${RESOURCE_ENV_API} /dsquare/${PROJECT_NAME}/.env
+cp /docker/resource/${PROJECT_NAME}.env /dsquare/${PROJECT_NAME}/.env
 ### Require permissions for Laravel app
 chmod -R 777 /dsquare/${PROJECT_NAME}/bootstrap/cache
 chmod -R 777 /dsquare/${PROJECT_NAME}/storage

@@ -14,6 +14,6 @@ $webConfig = shell_exec(sprintf('php /docker/docker.setting.php "%s" ', $variabl
 
 echo $webConfig;
 
-$boot = shell_exec(sprintf('bash /docker/docker.boot.sh --PROJECT_NAME=%s --RESOURCE_DATABASE=%s --RESOURCE_ENV_API=%s', $variableGit['PROJECT_NAME'],$variableGit['RESOURCE_DATABASE'],$variableGit['RESOURCE_ENV_API']));
+$boot = shell_exec(sprintf('bash /docker/docker.boot.sh %s', $variableGit['PROJECT_NAME']));
 
 echo $boot;
