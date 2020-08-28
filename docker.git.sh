@@ -18,14 +18,14 @@ echo "### GIT_BRANCH=${GIT_BRANCH}"
 DIR="/dsquare/${PROJECT_NAME}"
 if [ -d "$DIR" ]; then
     cd /dsquare/${PROJECT_NAME}
-    git checkout ${GIT_BRANCH}
-    git pull
+    git pull ${GIT_SOURCE} ${GIT_BRANCH}
     git branch
     echo "### Pull complete"
 else
     mkdir /dsquare/${PROJECT_NAME}
     cd /dsquare/${PROJECT_NAME}
-    git clone -b ${GIT_BRANCH} ${GIT_SOURCE} .
+    git clone ${GIT_SOURCE} .
+    git checkout ${GIT_BRANCH}
     git branch
     echo "### Clone complete"
 fi
