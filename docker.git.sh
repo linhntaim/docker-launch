@@ -17,18 +17,10 @@ echo "### GIT_BRANCH=${GIT_BRANCH}"
 ##Directory Project
 DIR="/dsquare/${PROJECT_NAME}"
 if [ -d "$DIR" ]; then
-    if [ "$(ls -A $DIR)" ]; then
-        cd /dsquare/${PROJECT_NAME}
-        git pull ${GIT_SOURCE} ${GIT_BRANCH}
-        git branch
-        echo "### Pull complete"
-    else
-        cd /dsquare/${PROJECT_NAME}
-        git clone ${GIT_SOURCE} .
-        git checkout ${GIT_BRANCH}
-        git branch
-        echo "### Clone complete"
-    fi
+    cd /dsquare/${PROJECT_NAME}
+    git pull ${GIT_SOURCE} ${GIT_BRANCH}
+    git branch
+    echo "### Pull complete"
 else
     mkdir /dsquare/${PROJECT_NAME}
     cd /dsquare/${PROJECT_NAME}
@@ -36,4 +28,10 @@ else
     git checkout ${GIT_BRANCH}
     git branch
     echo "### Clone complete"
+fi
+
+if [ "$(ls -A $DIR)" ]; then
+    echo "### Done"
+else
+    rmdir $DIR
 fi
