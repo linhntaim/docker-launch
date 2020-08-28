@@ -1,0 +1,8 @@
+{
+    "PROJECT_NAME":"project_name",
+    "GIT_USERNAME":"username",
+    "GIT_PASSWORD":"password",
+    "GIT_BRANCH":"master",
+    "DATABASE_NAME":"DATABASE_NAME.sql",
+    "PROJECT_ENV_API":"project.env.api"
+}
