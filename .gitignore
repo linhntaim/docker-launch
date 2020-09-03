@@ -1,7 +1,6 @@
+# IDE
 .idea
+
+# Settings
 docker-compose.yml
 git.json
-*.nginx.conf
-*.supervisor.conf
-resource/*
-!resource/.gitkeep

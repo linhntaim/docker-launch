@@ -1,6 +1,6 @@
 {
-    "PROJECT_NAME":"project_name",
-    "GIT_USERNAME":"username",
-    "GIT_PASSWORD":"password",
-    "GIT_BRANCH":"master"
+    "PROJECT_NAME": "project-name",
+    "GIT_USERNAME": "username",
+    "GIT_PASSWORD": "password",
+    "GIT_BRANCH": "master"
 }

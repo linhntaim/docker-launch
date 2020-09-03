@@ -18,24 +18,24 @@ mysql -e "GRANT ALL ON \`${PROJECT_NAME}\`.* TO '${PROJECT_NAME}'@'%';" #
 ### Apply the change of user permissions
 mysql -e "FLUSH PRIVILEGES;"
 ### Create database structure and data by script
-mysql -e "USE \`${PROJECT_NAME}\`;SOURCE /docker/resource/${PROJECT_NAME}.sql;"
+mysql -e "USE \`${PROJECT_NAME}\`;SOURCE /docker/resources/${PROJECT_NAME}.sql;"
 fi
 # Laravel
 ### Install packages
 composer install --working-dir=/dsquare/${PROJECT_NAME}
 ### Replace application environment
-cp /docker/resource/${PROJECT_NAME}.env /dsquare/${PROJECT_NAME}/.env
+cp /docker/resources/${PROJECT_NAME}.env /dsquare/${PROJECT_NAME}/.env
 ### Require permissions for Laravel app
 chmod -R 777 /dsquare/${PROJECT_NAME}/bootstrap/cache
 chmod -R 777 /dsquare/${PROJECT_NAME}/storage
 ### Make sure Laravel schedule is ready to run
 echo "* * * * * php /dsquare/${PROJECT_NAME}/artisan schedule:run >> /dev/null 2>&1" >> /etc/crontab
 # sendmail
-### Start service
-##service sendmail start
+### Start service (disabled)
+#service sendmail start
 # Supervisor
 ### Configuration to run Laravel queue
-cp /docker/.supervisor.conf /etc/supervisor/conf.d/${PROJECT_NAME}.conf
+cp /docker/resources/${PROJECT_NAME}.supervisor.conf /etc/supervisor/conf.d/${PROJECT_NAME}.conf
 ### Start service
 service supervisor start
 # PHP
@@ -43,10 +43,8 @@ service supervisor start
 service php7.4-fpm start
 # NGINX configuration
 ### Replace the configuration to run application
-cp /docker/.nginx.conf /etc/nginx/sites-available/default
+cp /docker/resources/${PROJECT_NAME}.nginx.conf /etc/nginx/sites-available/default
 ### Make sure the NGINX run in foreground; without it, docker container will stop running
 echo "daemon off;" >> /etc/nginx/nginx.conf
 ### Start service
 service nginx start
-
-

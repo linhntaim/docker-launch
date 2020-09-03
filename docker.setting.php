@@ -2,7 +2,7 @@
 $projectName = $argv[1];
 
 file_put_contents(
-    __DIR__ . DIRECTORY_SEPARATOR . '.nginx.conf',
+    __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . $projectName . '.nginx.conf',
     str_replace(
         '{project_name}',
         $projectName,
@@ -11,7 +11,7 @@ file_put_contents(
 );
 
 file_put_contents(
-    __DIR__ . DIRECTORY_SEPARATOR . '.supervisor.conf',
+    __DIR__ . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . $projectName . '.supervisor.conf',
     str_replace(
         '{project_name}',
         $projectName,
