@@ -47,6 +47,8 @@ Change `git.json`:
 Docker will automatically pull source code at `GIT_BRANCH` of repository `http://git-gbu.japaneast.cloudapp.azure.com/gbu/{PROJECT_NAME}` using account set by `GIT_USERNAME` and  `GIT_PASSWORD`.
 Please change those settings above to retrieve the project from our Gitlab.
 
+**\*\* Note**: Values for `GIT_USERNAME` and `GIT_PASSWORD` should be encoded using [this tool](https://homepage-gbu.azurewebsites.net/back-end/html/url-encode.html).
+
 Create 2 files named `{PROJECT_NAME}.env` `{PROJECT_NAME}.sql` and put them in `resources` folder. 
 Contents of 2 files should be edited by Back-end Engineers.
 
