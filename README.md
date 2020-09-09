@@ -84,7 +84,7 @@ bash docker-up.sh --db-refresh
 bash docker-up.sh --projects-refresh
 ```
 
-Finally, launch browser and access `http://localhost` (or `http://localhost:{YOUR WANTED PORT IF YOU CHANGED IT}`). If it shows 404 Not Found Page then it's OK.
+Finally, launch browser and access `http://localhost` (or `http://localhost:{YOUR WANTED PORT IF YOU CHANGED IT}`). If it shows a welcome page then it's OK.
 
 ** Make sure Docker is down by running [Stop](#stop) first or using [Run: Stop & Launch](#run-stop--launch) for a quicker way to launch.
 
@@ -151,3 +151,19 @@ docker volume rm docker_projects
 ```
 
 ** Make sure Docker is down by running [Stop](#stop) first.
+
+### Access
+
+To access Docker container directly:
+ 
+```bash
+docker-compose exec php bash
+```
+
+Some useful commands:
+
+```bash
+# Update source code without relaunch Docker
+cd /projects/{PROJECT_NAME}
+git pull
+```

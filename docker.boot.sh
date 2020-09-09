@@ -25,6 +25,9 @@ fi
 composer install --working-dir=/dsquare/${PROJECT_NAME}
 ### Replace application environment
 cp /docker/resources/${PROJECT_NAME}.env /dsquare/${PROJECT_NAME}/.env
+### Passport keys
+cp /dsquare/${PROJECT_NAME}/storage/oauth-private.key.example /dsquare/${PROJECT_NAME}/storage/oauth-private.key
+cp /dsquare/${PROJECT_NAME}/storage/oauth-public.key.example /dsquare/${PROJECT_NAME}/storage/oauth-public.key
 ### Require permissions for Laravel app
 chmod -R 777 /dsquare/${PROJECT_NAME}/bootstrap/cache
 chmod -R 777 /dsquare/${PROJECT_NAME}/storage
