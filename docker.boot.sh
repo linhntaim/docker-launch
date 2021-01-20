@@ -46,6 +46,8 @@ service supervisor start
 service php7.4-fpm start
 # NGINX configuration
 ### Replace the configuration to run application
+cp /docker/nginx.common-headers.conf /etc/nginx/common-headers.conf
+cp /docker/nginx.main.conf /etc/nginx/main.conf
 cp /docker/resources/${PROJECT_NAME}.nginx.conf /etc/nginx/sites-available/default
 ### Make sure the NGINX run in foreground; without it, docker container will stop running
 echo "daemon off;" >> /etc/nginx/nginx.conf
